@@ -1,0 +1,48 @@
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ include "parabol.redis-storage" . }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{- include "parabol.fullname" . }}-redis
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: redis
+    {{- include "parabol.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+      {{- include "parabol.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      namespace: {{ .Release.Namespace }}
+      labels:
+        app: redis
+        {{- include "parabol.labels" . | nindent 8 }}
+    spec:
+      containers:
+      - name: redis
+        image: redis:3.2.8
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 6379
+          name: cluster
+        volumeMounts:
+          - name: redis-persistent-storage
+            mountPath: /data
+      volumes:
+        - name: redis-persistent-storage
+          persistentVolumeClaim:
+            claimName: {{ include "parabol.redis-storage" . }}

@@ -6,16 +6,19 @@ metadata:
   name: {{ include "parabol.fullname" . }}
   namespace: {{ .Release.Namespace }}
   labels:
+    app: parabol
     {{- include "parabol.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       {{- include "parabol.selectorLabels" . | nindent 6 }}
+      app: parabol
   template:
     metadata:
       namespace: {{ .Release.Namespace }}
       labels:
+        app: parabol
         {{- include "parabol.labels" . | nindent 8 }}
       {{- with .Values.podAnnotations }}
       annotations:

@@ -86,3 +86,11 @@ Create the name of the service account to use
 {{- define "parabol.rethinkdb-storage" -}}
   {{- printf "%s-rethinkdb-data" (include "parabol.fullname" .) -}}
 {{- end -}}
+
+{{- define "parabol.postgres-storage" -}}
+  {{- printf "%s-postgres-data" (include "parabol.fullname" .) -}}
+{{- end -}}
+
+{{- define "parabol.redis-storage" -}}
+  {{- printf "%s-redis-data" (include "parabol.fullname" .) -}}
+{{- end -}}
