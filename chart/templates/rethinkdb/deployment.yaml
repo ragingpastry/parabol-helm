@@ -28,8 +28,8 @@ spec:
       - name: rethinkdb
         image: rethinkdb:2.4.0
         args:
-          - "rethinkdb" # Main command to run
-          - "--bind" # Args passed to that main command
+          - "rethinkdb"
+          - "--bind"
           - "all"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         ports:
