@@ -1,0 +1,26 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "parabol.fullname" . }}-rethinkdb
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "parabol.labels" . | nindent 4 }}
+    app: rethinkdb
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "8000"
+    prometheus.io/scheme: "http"
+    prometheus.io/path: "/metrics"
+spec:
+  type: ClusterIP
+  ports:
+    - name: admin
+      port: 8080
+    - name: driver
+      port: 28015
+    - name: cluser
+      port: 29015
+  selector:
+    {{- include "parabol.selectorLabels" . | nindent 4}}
+    app: rethinkdb

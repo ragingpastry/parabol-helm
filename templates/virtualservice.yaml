@@ -1,0 +1,38 @@
+{{- if and .Values.istio.enabled .Values.istio.parabol.enabled }}
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- if .Values.istio.parabol.labels }}
+      {{ toYaml .Values.istio.parabol.labels | indent 4 }}
+    {{- end }}
+    app.kubernetes.io/component: "parabol"
+  {{- if .Values.istio.parabol.annotations }}
+  annotations:
+    {{ toYaml .Values.istio.parabol.annotations | indent 4 }}
+  {{- end }}
+spec:
+  gateways:
+  {{- range .Values.istio.parabol.gateways }}
+    - {{ . }}
+  {{- end }}
+  hosts:
+  {{- if .Values.istio.parabol.hosts }}
+  {{- range .Values.istio.parabol.hosts }}
+    - {{ . | quote }}
+  {{- end }}
+  {{- else }}
+    - "{{ .Values.global.hosts.parabol.name }}"
+  {{- end }}
+  http:
+    - route:
+      - destination:
+          host: {{ .Release.Name }}-webservice-default.{{ .Release.Namespace }}.svc.cluster.local
+          port:
+            number: 3000
+      match:
+      - uri:
+          prefix: /
+{{- end }}

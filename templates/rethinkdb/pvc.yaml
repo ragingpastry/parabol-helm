@@ -1,0 +1,17 @@
+---
+{{- if and .Values.persistenence.enabled (not .Values.persistence.existingClaim) }}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ include "parabol.fullname" . }}-rethinkdb-pvc
+  namespace: {{ .Release.Namespace }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.persistence.rethinkdb.size }}
+  {{- if .Values.persistence.rethinkdb.storageClass }}
+  storageClassName: {{ .Values.persistence.rethinkdb.storageClass }}
+  {{- end }}
+{{- end }}

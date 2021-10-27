@@ -1,0 +1,60 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "parabol.rethinkdb.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "parabol.labels" . | nindent 4 }}
+    app: rethinkdb
+spec:
+  replicas: {{ .Values.rethinkdb.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "parabol.selectorLabels" . | nindent 6 }}
+      app: rethinkdb
+  template:
+    metadata:
+      namespace: {{ .Release.Namespace }}
+      labels:
+        {{- include "parabol.labels" . | nindent 8 }}
+        app: rethinkdb
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8}}
+      {{- end }}
+    spec:
+      containers:
+      - name: rethinkdb
+        image: rethinkdb:2.4.0
+        args:
+          - "rethinkdb" # Main command to run
+          - "--bind" # Args passed to that main command
+          - "all"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+        - containerPort: 8080
+          name: admin
+        - containerPort: 28015
+          name: driver
+        - containerPort: 29015
+          name: cluster
+        volumeMounts:
+          - name: rethinkdb-persistent-storage
+            mountPath: /data
+      volumes:
+        - name: rethinkdb-persistent-storage
+          persistentVolumeClaim:
+            claimName: {{ include "parabol.rethinkdb-storage" }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

@@ -1,0 +1,17 @@
+---
+{{- if .Values.persistenence.enabled }}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ include "parabol.fullname" . }}-pvc
+  namespace: {{ .Release.Namespace }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.persistence.parabol.size }}
+  {{- if .Values.persistence.parabol.storageClass }}
+  storageClassName: {{ .Values.persistence.parabol.storageClass }}
+  {{- end }}
+{{- end }}

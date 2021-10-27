@@ -1,0 +1,21 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "parabol.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "parabol.labels" . | nindent 4 }}
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "8000"
+    prometheus.io/scheme: "http"
+    prometheus.io/path: "/metrics"
+spec:
+  type: ClusterIP
+  ports:
+    - name: parabol
+      port: 3000
+      protocol: TCP
+  selector:
+    {{- include "parabol.selectorLabels" . | nindent 4 }}
