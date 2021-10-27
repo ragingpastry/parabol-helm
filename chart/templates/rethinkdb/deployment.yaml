@@ -45,7 +45,7 @@ spec:
       volumes:
         - name: rethinkdb-persistent-storage
           persistentVolumeClaim:
-            claimName: {{ include "parabol.rethinkdb-storage" }}
+            claimName: {{ include "parabol.rethinkdb-storage" . | nindent 16 }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
