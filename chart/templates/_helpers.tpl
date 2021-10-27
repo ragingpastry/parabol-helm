@@ -46,6 +46,15 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
+{{- define "parabol.rethinkdb.labels" -}}
+helm.sh/chart: {{ include "parabol.chart" . }}
+{{ include "parabol.selectorLabels" . }}
+{{- if .Chart.AppVersion }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{- end }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- end }}
+
 {{/*
 Selector labels
 */}}
@@ -71,5 +80,9 @@ Create the name of the service account to use
 {{- end }}
 
 {{- define "parabol.parabol-storage" -}}
+  {{- printf "%s-data" (include "parabol.fullname" .) -}}
+{{- end -}}
+
+{{- define "parabol.rethinkdb-storage" -}}
   {{- printf "%s-data" (include "parabol.fullname" .) -}}
 {{- end -}}
