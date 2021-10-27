@@ -8,7 +8,7 @@ metadata:
     {{- include "parabol.labels" . | nindent 4 }}
     app: rethinkdb
 spec:
-  replicas: {{ .Values.rethinkdb.replicaCount }}
+  replicas: 1
   selector:
     matchLabels:
       {{- include "parabol.selectorLabels" . | nindent 6 }}
