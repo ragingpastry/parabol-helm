@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "parabol.rethinkdb.fullname" . }}
+  name: {{ include "parabol.fullname" . }}-rethinkdb
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "parabol.labels" . | nindent 4 }}
