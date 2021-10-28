@@ -38,7 +38,7 @@ spec:
           {{- toYaml .Values.securityContext | nindent 12 }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         command: ["/bin/sh"]
-        args: ["-c", "yarn db:migrate && yarn pg:migrate up && yarn postdeploy && yarn start"]
+        args: ["-c", "yarn && yarn build && yarn db:migrate && yarn pg:migrate up && yarn postdeploy && yarn start"]
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         ports:
         - name: parabol
@@ -48,7 +48,7 @@ spec:
           - name: parabol-persistent-storage
             mountPath: /data
           - name: parabol-config
-            mountPath: /home/node/.env
+            mountPath: /home/node/parabol/.env
             subPath: .env
         resources:
             {{- toYaml .Values.resources | nindent 12 }}
