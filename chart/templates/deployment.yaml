@@ -48,7 +48,8 @@ spec:
           - name: parabol-persistent-storage
             mountPath: /data
           - name: parabol-config
-            mountPath: /home/node
+            mountPath: /home/node/.env
+            subPath: .env
         resources:
             {{- toYaml .Values.resources | nindent 12 }}
         env:
