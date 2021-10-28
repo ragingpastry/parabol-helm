@@ -19,7 +19,8 @@ persistence:
   # storageClass:
   # existingClaim:
 
-imagePullSecrets: []
+imagePullSecrets:
+  - name: private-registry
 nameOverride: ""
 fullnameOverride: ""
 
@@ -93,3 +94,5 @@ networkPolicies:
   controlPlaneCidr: 0.0.0.0/0
 
 openshift: false
+
+parabolConfig: |
