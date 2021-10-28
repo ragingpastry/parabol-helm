@@ -38,7 +38,7 @@ spec:
           {{- toYaml .Values.securityContext | nindent 12 }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         command: ["/bin/sh"]
-        args: ["-c", "yarn db:migrate && yarn pg:migrate up && yarn start"]
+        args: ["-c", "yarn db:migrate && yarn pg:migrate up && yarn postdeploy && yarn start"]
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         ports:
         - name: parabol
