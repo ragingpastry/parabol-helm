@@ -29,7 +29,7 @@ spec:
   http:
     - route:
       - destination:
-          host: {{ .Release.Name }}-webservice-default.{{ .Release.Namespace }}.svc.cluster.local
+          host: {{ .Release.Name }}.{{ .Release.Namespace }}.svc.cluster.local
           port:
             number: 3000
       match:

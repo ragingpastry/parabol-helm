@@ -68,10 +68,9 @@ tolerations: []
 
 affinity: {}
 
-hostname: bigbang.dev
 istio:
   # Toggle istio integration
-  enabled: false
+  enabled: true
   parabol:
     # Toggle vs creation
     enabled: true
@@ -79,8 +78,8 @@ istio:
     labels: {}
     gateways:
       - istio-system/main
-    # optional - only affects the Istio VirtualService ingress. Does not affect Gitlab configuration
-    hosts: null
+    hosts:
+      - parabol.staging.90cos.cdl.af.mil
 
 monitoring:
   enabled: false
