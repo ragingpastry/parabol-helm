@@ -8,7 +8,7 @@ metadata:
     {{- include "parabol.labels" . | nindent 4 }}
     app: parabol
 data:
-  parabol.config: |
+  .env: |
     ATLASSIAN_CLIENT_ID=''
     ATLASSIAN_CLIENT_SECRET=''
     AWS_ACCESS_KEY_ID=''

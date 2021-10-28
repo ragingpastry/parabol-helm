@@ -47,12 +47,18 @@ spec:
         volumeMounts:
           - name: parabol-persistent-storage
             mountPath: /data
+          - name: parabol-config
+            mountPath: /home/node
         resources:
             {{- toYaml .Values.resources | nindent 12 }}
+        env:
       volumes:
         - name: parabol-persistent-storage
           persistentVolumeClaim:
             claimName: {{ include "parabol.parabol-storage" .  }}
+        - name: parabol-config
+          configMap:
+            name: parabol-config
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
