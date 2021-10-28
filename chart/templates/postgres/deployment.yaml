@@ -9,7 +9,6 @@ metadata:
 data:
   POSTGRES_DB: parabol-saas
   POSTGRES_USER: pgparaboladmin
-  #POSTGRES_PASSWORD: test12345
   PGDATA: /var/lib/postgresql/data/pgdata
   postgresql.conf: |
     listen_addresses='*'
@@ -38,14 +37,14 @@ spec:
   replicas: 1
   selector:
     matchLabels:
+      {{- include "parabol.labels" . | nindent 6 }}
       app: postgres
-      {{- include "parabol.labels" . | nindent 8 }}
   template:
     metadata:
       namespace: {{ .Release.Namespace }}
       labels:
+        {{- include "parabol.labels" . | nindent 8 }}
         app: postgres
-        {{- include "parabol.labels" . | nindent 4 }}
     spec:
       containers:
       - name: postgres

@@ -14,23 +14,23 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{- include "parabol.fullname" . }}-redis
+  name: {{ include "parabol.fullname" . }}-redis
   namespace: {{ .Release.Namespace }}
   labels:
-    app: redis
     {{- include "parabol.labels" . | nindent 4 }}
+    app: redis
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: redis
       {{- include "parabol.selectorLabels" . | nindent 6 }}
+      app: redis
   template:
     metadata:
       namespace: {{ .Release.Namespace }}
       labels:
-        app: redis
         {{- include "parabol.labels" . | nindent 8 }}
+        app: redis
     spec:
       containers:
       - name: redis
