@@ -9,6 +9,7 @@ metadata:
 data:
   POSTGRES_DB: parabol-saas
   POSTGRES_USER: pgparaboladmin
+  POSTGRES_PASSWORD: '__POSTGRES_PASSWORD__'
   PGDATA: /var/lib/postgresql/data/pgdata
   postgresql.conf: |
     listen_addresses='*'

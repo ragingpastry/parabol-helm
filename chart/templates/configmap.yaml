@@ -1,0 +1,65 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: parabol-config
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "parabol.labels" . | nindent 4 }}
+    app: parabol
+data:
+  parabol.config: |
+    ATLASSIAN_CLIENT_ID=''
+    ATLASSIAN_CLIENT_SECRET=''
+    AWS_ACCESS_KEY_ID=''
+    AWS_REGION=''
+    AWS_S3_BUCKET=''
+    AWS_SECRET_ACCESS_KEY=''
+    CDN_BASE_URL='//action-files.parabol.co/production'
+    FILE_STORE_PROVIDER=''
+    GITHUB_CLIENT_ID=''
+    GITHUB_CLIENT_SECRET=''
+    GITHUB_WEBHOOK_SECRET=''
+    GOOGLE_CLOUD_CLIENT_EMAIL=''
+    GOOGLE_CLOUD_PRIVATE_KEY=''
+    GOOGLE_CLOUD_PRIVATE_KEY_ID=''
+    GOOGLE_OAUTH_CLIENT_ID=''
+    GOOGLE_OAUTH_CLIENT_SECRET=''
+    GOOGLE_TAG_MANAGER_CONTAINER_ID=''
+    GRAPHQL_HOST='localhost:3000'
+    GRAPHQL_PROTOCOL='http'
+    HOST=''
+    INVITATION_SHORTLINK='90cos.parabol.co/invitation-link'
+    # MAIL GLOBALS. PROVIDER: mailgun | google
+    MAIL_PROVIDER='mailgun'
+    MAIL_GOOGLE_USER=''
+    MAIL_GOOGLE_PASS=''
+    MAILGUN_API_KEY=''
+    MAILGUN_DOMAIN='mail.parabol.co'
+    MAIL_FROM='parabol@mail.parabol.co'
+    NODE_EXTRA_CA_CERTS='./packages/server/postgres/cacerts'
+    PROTO='https'
+    PGADMIN_DEFAULT_EMAIL=''
+    PGADMIN_DEFAULT_PASSWORD=''
+    PGSSLMODE='disable'
+    PORT='3000'
+    POSTGRES_PASSWORD='__POSTGRES_PASSWORD__'
+    POSTGRES_USER='pgparaboladmin'
+    POSTGRES_DB='parabol-saas'
+    POSTGRES_HOST='parabol-postgres'
+    POSTGRES_PORT='5432'
+    REDIS_URL='redis'
+    RETHINKDB_SSL='false'
+    RETHINKDB_URL='parabol-rethinkdb'
+    # SEGMENT_WRITE_KEY=''
+    SEGMENT_FN_KEY=''
+    # SENTRY_DSN=''
+    # Cluster node number 0 - 1023
+    SERVER_ID='0'
+    SERVER_SECRET=''
+    SLACK_CLIENT_ID=''
+    SLACK_CLIENT_SECRET=''
+    STRIPE_PUBLISHABLE_KEY=''
+    STRIPE_SECRET_KEY=''
+    STRIPE_WEBHOOK_SECRET=''
+    HUBSPOT_API_KEY=''
